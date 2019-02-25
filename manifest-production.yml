@@ -1,0 +1,8 @@
+﻿---
+applications:
+- name: pal-tracker
+  host: k-and-d-prod
+  path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
+  random-route: true
+  env:
+    WELCOME_MESSAGE: Hello from Cloud Foundry

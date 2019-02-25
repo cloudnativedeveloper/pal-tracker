@@ -1,0 +1,7 @@
+﻿---
+applications:
+- name: pal-tracker
+  host: kendall-and-david
+  path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
+  env:
+    WELCOME_MESSAGE: Hello from Cloud Foundry
