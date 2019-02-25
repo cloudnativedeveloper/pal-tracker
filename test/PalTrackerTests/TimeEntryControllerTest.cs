@@ -71,10 +71,10 @@ namespace PalTrackerTests
         public void List()
         {
             var timeEntries = new List<TimeEntry>
-            {
-                new TimeEntry(1, 222, 333, new DateTime(2008, 08, 01, 12, 00, 01), 24),
-                new TimeEntry(2, 999, 888, new DateTime(2018, 12, 05, 23, 00, 01), 8)
-            };
+                {
+                    new TimeEntry(1, 222, 333, new DateTime(2008, 08, 01, 12, 00, 01), 24),
+                    new TimeEntry(2, 999, 888, new DateTime(2018, 12, 05, 23, 00, 01), 8)
+                };
 
             _repository.Setup(r => r.List()).Returns(timeEntries);
 
