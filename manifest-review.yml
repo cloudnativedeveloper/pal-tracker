@@ -4,4 +4,4 @@ applications:
   host: kendall-and-david
   path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
   env:
-    WELCOME_MESSAGE: Hello from Cloud Foundry
+    WELCOME_MESSAGE: Hello from the review environment
