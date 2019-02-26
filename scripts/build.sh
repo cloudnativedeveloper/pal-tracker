@@ -12,6 +12,7 @@ mkdir -p $build_output
 mkdir -p $artifacts_path
 
 cp manifest-*.yml $build_output
+chmod +x scripts/migrate-databases.sh
 cp scripts/migrate-databases.sh $build_output
 cp -r src/PalTracker/databases $build_output
 
