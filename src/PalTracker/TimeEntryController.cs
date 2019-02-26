@@ -6,16 +6,19 @@ namespace PalTracker
     public class TimeEntryController : ControllerBase
     {
         private readonly ITimeEntryRepository _repository;
+        private readonly IOperationCounter<TimeEntry> _operationCounter;
 
-        public TimeEntryController(ITimeEntryRepository repository)
+        public TimeEntryController(ITimeEntryRepository repository, IOperationCounter<TimeEntry> operationCounter)
         {
             _repository = repository;
+            _operationCounter = operationCounter;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] TimeEntry timeEntry)
         {
             var createdTimeEntry = _repository.Create(timeEntry);
+            _operationCounter.Increment(TrackedOperation.Create);
 
             return CreatedAtRoute("GetTimeEntry", new { id = createdTimeEntry.Id }, createdTimeEntry);
         }
@@ -23,19 +26,36 @@ namespace PalTracker
         [HttpGet("{id}", Name = "GetTimeEntry")]
         public IActionResult Read(long id)
         {
-            return _repository.Contains(id) ? (IActionResult)Ok(_repository.Find(id)) : NotFound();
+            if (_repository.Contains(id))
+            {
+                _operationCounter.Increment(TrackedOperation.Read);
+                return Ok(_repository.Find(id));
+            } else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
         public IActionResult List()
         {
-            return Ok(_repository.List());
+            var result = Ok(_repository.List());
+            _operationCounter.Increment(TrackedOperation.List);
+            return result;
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] TimeEntry timeEntry)
         {
-            return _repository.Contains(id) ? (IActionResult)Ok(_repository.Update(id, timeEntry)) : NotFound();
+            if (_repository.Contains(id))
+            {
+                _operationCounter.Increment(TrackedOperation.Update);
+                return Ok(_repository.Update(id, timeEntry));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]
@@ -47,6 +67,8 @@ namespace PalTracker
             }
 
             _repository.Delete(id);
+
+            _operationCounter.Increment(TrackedOperation.Delete);
 
             return NoContent();
         }
