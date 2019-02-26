@@ -6,3 +6,5 @@ applications:
   random-route: true
   env:
     WELCOME_MESSAGE: Hello from the production environment
+  services:
+    - tracker-database

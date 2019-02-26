@@ -5,3 +5,5 @@ applications:
   path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
   env:
     WELCOME_MESSAGE: Hello from the review environment
+  services:
+    - tracker-database
